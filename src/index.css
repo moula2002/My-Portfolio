@@ -9,6 +9,8 @@
   --color-primary-foreground: hsl(var(--primary-foreground));
 
   --color-card: hsl(var(--card));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
@@ -90,6 +92,9 @@
     --primary: 250 47% 60%;
     --primary-foreground: 210 40% 98%;
 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
     --border: 214 32% 91%;
   }
 
@@ -101,6 +106,9 @@
 
     --primary: 250 65% 65%;
     --primary-foreground: 213 31% 91%;
+
+    --secondary: 217.2 32.6% 12%;
+    --secondary-foreground: 210 40% 98%;
 
     --border: 217 33% 20%;
   }
