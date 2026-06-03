@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, ExternalLink, Github, Leaf, Users, Hotel, ShoppingBag, Film, Droplets, BookOpen, Globe } from "lucide-react";
+import { ArrowRight, ExternalLink, Github, Leaf, Users, Hotel, ShoppingBag, Droplets, Heart, GraduationCap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TiltCard } from "./ui/TiltCard";
 
@@ -14,6 +14,7 @@ const projects = [
     category: "Full Stack / E-Commerce",
     demoUrl: "https://dump-and-drop-seven.vercel.app",
     githubUrl: "https://github.com/moula2002/Dump-and-Drop",
+    image: "/projects/dump_and_drop.png",
     icon: Leaf,
     gradient: "from-emerald-500/20 to-teal-500/10 border-emerald-500/30 text-emerald-400",
     iconBg: "bg-emerald-500/10 text-emerald-400",
@@ -26,6 +27,7 @@ const projects = [
     category: "HR & Admin Panels",
     demoUrl: "https://abhilekha-hr-website.vercel.app",
     githubUrl: "https://github.com/moula2002/AbhilekhaHR_website",
+    image: "/projects/abhilekha.png",
     icon: Users,
     gradient: "from-blue-500/20 to-indigo-500/10 border-blue-500/30 text-blue-400",
     iconBg: "bg-blue-500/10 text-blue-400",
@@ -38,6 +40,7 @@ const projects = [
     category: "Landing & Bookings",
     demoUrl: "https://krishna-stay-inn.vercel.app",
     githubUrl: "https://github.com/moula2002/Krishna-Stay-Inn",
+    image: "/projects/krishna_stay.png",
     icon: Hotel,
     gradient: "from-amber-500/20 to-orange-500/10 border-amber-500/30 text-amber-400",
     iconBg: "bg-amber-500/10 text-amber-400",
@@ -50,45 +53,62 @@ const projects = [
     category: "Full Stack / E-Commerce",
     demoUrl: "https://sadhana-cart-ecom-eight.vercel.app",
     githubUrl: "https://github.com/moula2002/SadhanaCart",
+    image: "/projects/sadhana_cart.png",
     icon: ShoppingBag,
     gradient: "from-purple-500/20 to-pink-500/10 border-purple-500/30 text-purple-400",
     iconBg: "bg-purple-500/10 text-purple-400",
   },
   {
     id: 5,
-    title: "Chethan Cinemas Admin",
-    description: "Theater management administrator panel facilitating automated ticketing configurations, seat map layouts, and booking stats reporting.",
-    tech: ["React", "Flexbox/Grid", "JavaScript", "Charts"],
-    category: "HR & Admin Panels",
-    demoUrl: "https://chethancinemas-admin.vercel.app",
-    githubUrl: "https://github.com/moula2002/chethancinemas-admin",
-    icon: Film,
-    gradient: "from-red-500/20 to-rose-500/10 border-red-500/30 text-red-400",
-    iconBg: "bg-red-500/10 text-red-400",
+    title: "AFS Stickering & Signages",
+    description: "E-commerce platform for ordering custom designer nameplates, home signages, wallpapers, and desk name plates.",
+    tech: ["React", "Tailwind CSS", "Redux", "NodeJS", "MongoDB"],
+    category: "Full Stack / E-Commerce",
+    demoUrl: "https://afs-ecommerce.vercel.app",
+    githubUrl: "https://github.com/moula2002/Afs-ecommerce",
+    image: "/projects/afs_ecommerce.png",
+    icon: ShoppingBag,
+    gradient: "from-orange-500/20 to-amber-500/10 border-orange-500/30 text-orange-400",
+    iconBg: "bg-orange-500/10 text-orange-400",
   },
   {
     id: 6,
+    title: "Trishula Trust (NGO)",
+    description: "Educational & Charitable NGO website advocating for child development, raising awareness, and accepting online donations.",
+    tech: ["React", "Tailwind CSS", "Vite", "Framer Motion"],
+    category: "Landing & Bookings",
+    demoUrl: "https://ngo-website-sandy-nu.vercel.app",
+    githubUrl: "https://github.com/moula2002/ngo-website",
+    image: "/projects/trishula_trust.png",
+    icon: Heart,
+    gradient: "from-pink-500/20 to-rose-500/10 border-pink-500/30 text-pink-400",
+    iconBg: "bg-pink-500/10 text-pink-400",
+  },
+  {
+    id: 7,
+    title: "Vidya Bharati School",
+    description: "Official website for Vidya Bharati English Medium Primary School (CBSE), featuring admissions information, vision details, activities, and faculty profiles.",
+    tech: ["React", "Tailwind CSS", "Vite", "Lucide Icons"],
+    category: "Landing & Bookings",
+    demoUrl: "https://school-website-beta-one.vercel.app",
+    githubUrl: "https://github.com/moula2002/school-website",
+    image: "/projects/vidya_bharati_school.png",
+    icon: GraduationCap,
+    gradient: "from-indigo-500/20 to-purple-500/10 border-indigo-500/30 text-indigo-400",
+    iconBg: "bg-indigo-500/10 text-indigo-400",
+  },
+  {
+    id: 8,
     title: "RK Sump & Tank Services",
     description: "Service scheduling platform for booking commercial sump and water tank sanitation, complete with booking scheduler forms.",
     tech: ["React", "Tailwind CSS", "Responsive UI", "Formik"],
     category: "Landing & Bookings",
     demoUrl: "https://rk-sump-and-tank-website.vercel.app",
     githubUrl: "https://github.com/moula2002/Rk_Sump-and-tank-website-",
+    image: "/projects/rk_sump_tank.png",
     icon: Droplets,
     gradient: "from-cyan-500/20 to-sky-500/10 border-cyan-500/30 text-cyan-400",
     iconBg: "bg-cyan-500/10 text-cyan-400",
-  },
-  {
-    id: 7,
-    title: "Book Finder Catalog",
-    description: "Book directory directory searching APIs to load book reviews, author info, publications data, and dynamic paging controls.",
-    tech: ["React", "Axios", "OpenLibrary API", "CSS Modules"],
-    category: "Landing & Bookings",
-    demoUrl: "https://book-finder-lake-beta.vercel.app",
-    githubUrl: "https://github.com/moula2002/Book-Finder",
-    icon: BookOpen,
-    gradient: "from-teal-500/20 to-emerald-500/10 border-teal-500/30 text-teal-400",
-    iconBg: "bg-teal-500/10 text-teal-400",
   },
 ];
 
@@ -151,13 +171,29 @@ export const ProjectsSection = () => {
                   className="h-full"
                 >
                   <TiltCard className="h-full">
-                    <div className="h-full bg-card/25 backdrop-blur-md rounded-xl border border-border/40 overflow-hidden flex flex-col p-6 text-left hover:border-primary/45 transition-colors duration-300">
-                      {/* Stylized Gradient Header Header Area */}
-                      <div className={`w-full h-32 rounded-lg bg-gradient-to-br ${project.gradient} border flex items-center justify-center relative overflow-hidden mb-6`}>
-                        <div className="absolute inset-0 bg-radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), transparent)" />
-                        <div className={`p-4 rounded-2xl ${project.iconBg} backdrop-blur-xs relative z-10`}>
-                          <IconComp size={36} />
-                        </div>
+                    <div className="h-full bg-card/25 backdrop-blur-md rounded-xl border border-border/40 overflow-hidden flex flex-col p-6 text-left hover:border-primary/45 transition-colors duration-300 group">
+                      {/* Stylized Gradient Header Header Area or Project Image */}
+                      <div className="w-full h-40 rounded-lg border border-border/40 overflow-hidden relative mb-6 transition-colors duration-300">
+                        {project.image ? (
+                          <div className="w-full h-full relative overflow-hidden">
+                            <img 
+                              src={project.image} 
+                              alt={project.title} 
+                              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                            />
+                            {/* Overlay icon in top right */}
+                            <div className={`absolute top-2 right-2 p-1.5 rounded-lg ${project.iconBg} backdrop-blur-md border border-white/10 opacity-80 group-hover:opacity-100 transition-opacity`}>
+                              <IconComp size={16} />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className={`w-full h-full bg-gradient-to-br ${project.gradient} flex items-center justify-center relative overflow-hidden`}>
+                            <div className="absolute inset-0 bg-radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), transparent)" />
+                            <div className={`p-4 rounded-2xl ${project.iconBg} backdrop-blur-xs relative z-10`}>
+                              <IconComp size={36} />
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       {/* Tech Badges */}

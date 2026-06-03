@@ -79,7 +79,7 @@ export const StarBackground = () => {
   const layer3Stars = stars.filter((s) => s.depthLayer === 3);
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-gradient-to-b from-[#030712] via-[#0b0f19] to-[#030712]">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-gradient-to-b from-background via-card/50 to-background transition-colors duration-500">
       {/* Tier 1 - Distant tiny stars (minimal parallax) */}
       <div
         className="absolute inset-0 transition-transform duration-300 ease-out"
