@@ -43,7 +43,7 @@ export const HeroSection = () => {
             <span>Welcome to my digital space</span>
           </motion.div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight font-display">
             Hi, I'm{" "}
             <span className="text-gradient drop-shadow-[0_0_15px_rgba(167,139,250,0.2)]">
               MOULA HUSSAIN

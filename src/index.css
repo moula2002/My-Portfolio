@@ -13,6 +13,9 @@
   --color-muted-foreground: hsl(var(--muted-foreground));
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
+  
+  --font-sans: "Plus Jakarta Sans", "Outfit", sans-serif;
+  --font-display: "Outfit", sans-serif;
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
