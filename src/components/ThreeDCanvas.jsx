@@ -10,7 +10,6 @@ const ReactNode = ({ position }) => {
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.getElapsedTime();
-    // Local float
     groupRef.current.position.y = position[1] + Math.sin(t * 1.5) * 0.1;
   });
 
@@ -41,7 +40,13 @@ const ReactNode = ({ position }) => {
       </mesh>
 
       {/* Floating text tag */}
-      <Text position={[0, 0.9, 0]} fontSize={0.14} color="#00f3ff" font="Courier New" transparent opacity={0.8}>
+      <Text 
+        position={[0, 0.9, 0]} 
+        fontSize={0.14} 
+        color="#00f3ff" 
+        material-transparent={true} 
+        material-opacity={0.8}
+      >
         React.js
       </Text>
     </group>
@@ -55,7 +60,6 @@ const MongoNode = ({ position }) => {
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.getElapsedTime();
-    // Local float
     groupRef.current.position.y = position[1] + Math.cos(t * 1.2) * 0.08;
   });
 
@@ -82,7 +86,13 @@ const MongoNode = ({ position }) => {
       </mesh>
 
       {/* Floating text tag */}
-      <Text position={[0, 0.9, 0]} fontSize={0.14} color="#10b981" font="Courier New" transparent opacity={0.8}>
+      <Text 
+        position={[0, 0.9, 0]} 
+        fontSize={0.14} 
+        color="#10b981" 
+        material-transparent={true} 
+        material-opacity={0.8}
+      >
         MongoDB
       </Text>
     </group>
@@ -96,7 +106,6 @@ const NodeJsNode = ({ position }) => {
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.getElapsedTime();
-    // Local float & rotation
     groupRef.current.position.y = position[1] + Math.sin(t * 1.0) * 0.08;
     groupRef.current.rotation.y = t * 0.4;
   });
@@ -126,7 +135,13 @@ const NodeJsNode = ({ position }) => {
       <Line points={[[0, 0, 0], [-0.3, -0.3, -0.2]]} color="#4ade80" lineWidth={0.8} transparent opacity={0.5} />
 
       {/* Floating text tag */}
-      <Text position={[0, 0.9, 0]} fontSize={0.14} color="#22c55e" font="Courier New" transparent opacity={0.8}>
+      <Text 
+        position={[0, 0.9, 0]} 
+        fontSize={0.14} 
+        color="#22c55e" 
+        material-transparent={true} 
+        material-opacity={0.8}
+      >
         Node.js
       </Text>
     </group>
@@ -157,7 +172,13 @@ const ExpressNode = ({ position }) => {
       </mesh>
 
       {/* Floating text tag */}
-      <Text position={[0, 0.9, 0]} fontSize={0.14} color="#ec4899" font="Courier New" transparent opacity={0.8}>
+      <Text 
+        position={[0, 0.9, 0]} 
+        fontSize={0.14} 
+        color="#ec4899" 
+        material-transparent={true} 
+        material-opacity={0.8}
+      >
         Express.js
       </Text>
     </group>
@@ -181,9 +202,8 @@ const FloatingText = ({ text, position, speed, range }) => {
       position={position}
       fontSize={0.12}
       color="#a78bfa"
-      font="Courier New"
-      transparent
-      opacity={0.4}
+      material-transparent={true}
+      material-opacity={0.4}
     >
       {text}
     </Text>
@@ -264,7 +284,6 @@ const MernConstellation = ({ isMobile }) => {
     constellationRef.current.position.y = springY.get() - (mouse.y * 0.4);
     constellationRef.current.position.z = springZ.get();
 
-    // Combine scroll-spin with baseline auto-rotation
     constellationRef.current.rotation.x = springRx.get();
     constellationRef.current.rotation.y = springRy.get() + autoRotateY;
 
