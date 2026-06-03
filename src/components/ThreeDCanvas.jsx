@@ -1,48 +1,93 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useEffect, useState } from "react";
 import { useScroll, useTransform, useSpring } from "framer-motion";
-import { Line, Html } from "@react-three/drei";
+import { Line, Html, Sparkles, Grid } from "@react-three/drei";
 
 // Sub-component: 3D React Atom Node
 const ReactNode = ({ position }) => {
   const groupRef = useRef(null);
+  const electron1Ref = useRef(null);
+  const electron2Ref = useRef(null);
+  const electron3Ref = useRef(null);
 
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.getElapsedTime();
+    
+    // Subtle float
     groupRef.current.position.y = position[1] + Math.sin(t * 1.5) * 0.1;
+    
+    // Electron orbits
+    if (electron1Ref.current) {
+      const theta = t * 2.2;
+      electron1Ref.current.position.set(0.65 * Math.cos(theta), 0.65 * Math.sin(theta), 0);
+    }
+    if (electron2Ref.current) {
+      const theta = t * 2.6 + 1.2;
+      electron2Ref.current.position.set(0.65 * Math.cos(theta), 0.65 * Math.sin(theta), 0);
+    }
+    if (electron3Ref.current) {
+      const theta = t * 1.8 + 2.4;
+      electron3Ref.current.position.set(0.65 * Math.cos(theta), 0.65 * Math.sin(theta), 0);
+    }
   });
+
+  const ringMaterial = (
+    <meshBasicMaterial color="#00f3ff" transparent opacity={0.4} />
+  );
+  
+  const electronMaterial = (
+    <meshBasicMaterial color="#00f3ff" toneMapped={false} />
+  );
 
   return (
     <group ref={groupRef} position={[position[0], position[1], position[2]]}>
-      {/* Central Sphere */}
+      {/* Central Sphere Core */}
       <mesh>
         <sphereGeometry args={[0.26, 32, 32]} />
         <meshStandardMaterial color="#00f3ff" emissive="#00f3ff" emissiveIntensity={0.8} roughness={0.1} />
       </mesh>
       
       {/* Orbit 1 */}
-      <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
-        <torusGeometry args={[0.65, 0.015, 8, 48]} />
-        <meshBasicMaterial color="#00f3ff" transparent opacity={0.6} />
-      </mesh>
+      <group rotation={[Math.PI / 3, Math.PI / 4, 0]}>
+        <mesh>
+          <torusGeometry args={[0.65, 0.01, 8, 48]} />
+          {ringMaterial}
+        </mesh>
+        <mesh ref={electron1Ref}>
+          <sphereGeometry args={[0.045, 12, 12]} />
+          {electronMaterial}
+        </mesh>
+      </group>
       
       {/* Orbit 2 */}
-      <mesh rotation={[-Math.PI / 3, Math.PI / 4, 0]}>
-        <torusGeometry args={[0.65, 0.015, 8, 48]} />
-        <meshBasicMaterial color="#00f3ff" transparent opacity={0.6} />
-      </mesh>
+      <group rotation={[-Math.PI / 3, Math.PI / 4, 0]}>
+        <mesh>
+          <torusGeometry args={[0.65, 0.01, 8, 48]} />
+          {ringMaterial}
+        </mesh>
+        <mesh ref={electron2Ref}>
+          <sphereGeometry args={[0.045, 12, 12]} />
+          {electronMaterial}
+        </mesh>
+      </group>
       
       {/* Orbit 3 */}
-      <mesh rotation={[0, Math.PI / 2, 0]}>
-        <torusGeometry args={[0.65, 0.015, 8, 48]} />
-        <meshBasicMaterial color="#00f3ff" transparent opacity={0.6} />
-      </mesh>
+      <group rotation={[0, Math.PI / 2, 0]}>
+        <mesh>
+          <torusGeometry args={[0.65, 0.01, 8, 48]} />
+          {ringMaterial}
+        </mesh>
+        <mesh ref={electron3Ref}>
+          <sphereGeometry args={[0.045, 12, 12]} />
+          {electronMaterial}
+        </mesh>
+      </group>
 
       {/* Floating text tag as HTML badge */}
       <Html position={[0, 0.8, 0]} center distanceFactor={6}>
-        <div className="px-2 py-0.5 rounded-md bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_8px_rgba(0,243,255,0.2)] select-none">
-          React.js
+        <div className="px-2 py-0.5 rounded-sm bg-[#00f3ff]/15 border-l-2 border-l-[#00f3ff] border-y border-r border-[#00f3ff]/30 text-[#00f3ff] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_10px_rgba(0,243,255,0.15)] select-none backdrop-blur-xs">
+          [ React.js ]
         </div>
       </Html>
     </group>
@@ -52,39 +97,79 @@ const ReactNode = ({ position }) => {
 // Sub-component: 3D MongoDB Stack Node
 const MongoNode = ({ position }) => {
   const groupRef = useRef(null);
+  const scannerRef = useRef(null);
 
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.getElapsedTime();
     groupRef.current.position.y = position[1] + Math.cos(t * 1.2) * 0.08;
+    
+    if (scannerRef.current) {
+      scannerRef.current.position.y = Math.sin(t * 2.5) * 0.22 + 0.08;
+    }
   });
 
-  const stackMaterial = (
-    <meshStandardMaterial color="#10b981" emissive="#10b981" emissiveIntensity={0.6} roughness={0.2} metalness={0.8} />
+  const outerMaterial = (
+    <meshStandardMaterial color="#10b981" transparent opacity={0.25} wireframe />
+  );
+  const innerMaterial = (
+    <meshStandardMaterial color="#10b981" emissive="#10b981" emissiveIntensity={0.8} roughness={0.2} />
   );
 
   return (
     <group ref={groupRef} position={[position[0], position[1], position[2]]}>
-      {/* Stack Cylinder 1 */}
-      <mesh position={[0, 0.2, 0]}>
-        <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
-        {stackMaterial}
-      </mesh>
-      {/* Stack Cylinder 2 */}
+      {/* Central Laser Beam Core */}
       <mesh position={[0, 0.08, 0]}>
-        <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
-        {stackMaterial}
+        <cylinderGeometry args={[0.02, 0.02, 0.7, 8]} />
+        <meshBasicMaterial color="#10b981" transparent opacity={0.6} />
       </mesh>
-      {/* Stack Cylinder 3 */}
-      <mesh position={[0, -0.04, 0]}>
-        <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
-        {stackMaterial}
+
+      {/* Database Stack Ring 1 */}
+      <group position={[0, 0.25, 0]}>
+        <mesh>
+          <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
+          {outerMaterial}
+        </mesh>
+        <mesh scale={[0.8, 0.9, 0.8]}>
+          <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
+          {innerMaterial}
+        </mesh>
+      </group>
+
+      {/* Database Stack Ring 2 */}
+      <group position={[0, 0.08, 0]}>
+        <mesh>
+          <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
+          {outerMaterial}
+        </mesh>
+        <mesh scale={[0.8, 0.9, 0.8]}>
+          <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
+          {innerMaterial}
+        </mesh>
+      </group>
+
+      {/* Database Stack Ring 3 */}
+      <group position={[0, -0.09, 0]}>
+        <mesh>
+          <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
+          {outerMaterial}
+        </mesh>
+        <mesh scale={[0.8, 0.9, 0.8]}>
+          <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
+          {innerMaterial}
+        </mesh>
+      </group>
+
+      {/* Moving Scanning Band */}
+      <mesh ref={scannerRef}>
+        <torusGeometry args={[0.26, 0.012, 8, 24]} />
+        <meshBasicMaterial color="#34d399" toneMapped={false} />
       </mesh>
 
       {/* Floating text tag as HTML badge */}
       <Html position={[0, 0.8, 0]} center distanceFactor={6}>
-        <div className="px-2 py-0.5 rounded-md bg-[#10b981]/10 border border-[#10b981]/30 text-[#10b981] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_8px_rgba(16,185,129,0.2)] select-none">
-          MongoDB
+        <div className="px-2 py-0.5 rounded-sm bg-[#10b981]/15 border-l-2 border-l-[#10b981] border-y border-r border-[#10b981]/30 text-[#10b981] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_10px_rgba(16,185,129,0.15)] select-none backdrop-blur-xs">
+          [ MongoDB ]
         </div>
       </Html>
     </group>
@@ -104,32 +189,39 @@ const NodeJsNode = ({ position }) => {
 
   return (
     <group ref={groupRef} position={[position[0], position[1], position[2]]}>
-      {/* Central Node */}
+      {/* Central Node Core */}
       <mesh>
         <sphereGeometry args={[0.2, 16, 16]} />
         <meshStandardMaterial color="#22c55e" emissive="#22c55e" emissiveIntensity={0.7} roughness={0.1} />
       </mesh>
       
       {/* Satellite 1 */}
-      <mesh position={[0.4, 0.2, 0.1]}>
+      <mesh position={[0.45, 0.2, 0.1]}>
         <sphereGeometry args={[0.06, 8, 8]} />
-        <meshBasicMaterial color="#4ade80" />
+        <meshStandardMaterial color="#4ade80" emissive="#4ade80" emissiveIntensity={0.5} />
       </mesh>
       
       {/* Satellite 2 */}
-      <mesh position={[-0.3, -0.3, -0.2]}>
+      <mesh position={[-0.35, -0.3, -0.2]}>
         <sphereGeometry args={[0.05, 8, 8]} />
-        <meshBasicMaterial color="#4ade80" />
+        <meshStandardMaterial color="#4ade80" emissive="#4ade80" emissiveIntensity={0.5} />
+      </mesh>
+
+      {/* Satellite 3 */}
+      <mesh position={[0.1, -0.4, 0.35]}>
+        <sphereGeometry args={[0.05, 8, 8]} />
+        <meshStandardMaterial color="#4ade80" emissive="#4ade80" emissiveIntensity={0.5} />
       </mesh>
 
       {/* Connection link to satellite */}
-      <Line points={[[0, 0, 0], [0.4, 0.2, 0.1]]} color="#4ade80" lineWidth={0.8} transparent opacity={0.5} />
-      <Line points={[[0, 0, 0], [-0.3, -0.3, -0.2]]} color="#4ade80" lineWidth={0.8} transparent opacity={0.5} />
+      <Line points={[[0, 0, 0], [0.45, 0.2, 0.1]]} color="#4ade80" lineWidth={0.8} transparent opacity={0.4} />
+      <Line points={[[0, 0, 0], [-0.35, -0.3, -0.2]]} color="#4ade80" lineWidth={0.8} transparent opacity={0.4} />
+      <Line points={[[0, 0, 0], [0.1, -0.4, 0.35]]} color="#4ade80" lineWidth={0.8} transparent opacity={0.4} />
 
       {/* Floating text tag as HTML badge */}
       <Html position={[0, 0.8, 0]} center distanceFactor={6}>
-        <div className="px-2 py-0.5 rounded-md bg-[#22c55e]/10 border border-[#22c55e]/30 text-[#22c55e] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_8px_rgba(34,197,94,0.2)] select-none">
-          Node.js
+        <div className="px-2 py-0.5 rounded-sm bg-[#22c55e]/15 border-l-2 border-l-[#22c55e] border-y border-r border-[#22c55e]/30 text-[#22c55e] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_10px_rgba(34,197,94,0.15)] select-none backdrop-blur-xs">
+          [ Node.js ]
         </div>
       </Html>
     </group>
@@ -139,30 +231,44 @@ const NodeJsNode = ({ position }) => {
 // Sub-component: 3D Express.js Node
 const ExpressNode = ({ position }) => {
   const groupRef = useRef(null);
+  const coreRef = useRef(null);
 
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.getElapsedTime();
     groupRef.current.position.y = position[1] + Math.cos(t * 1.4) * 0.09;
     groupRef.current.rotation.x = t * 0.5;
+    
+    if (coreRef.current) {
+      const pulse = 1.0 + Math.sin(t * 4.0) * 0.15;
+      coreRef.current.scale.setScalar(pulse);
+    }
   });
 
   return (
     <group ref={groupRef} position={[position[0], position[1], position[2]]}>
+      {/* Wireframe dodecahedron container */}
       <mesh>
-        <dodecahedronGeometry args={[0.2]} />
-        <meshStandardMaterial color="#ec4899" emissive="#ec4899" emissiveIntensity={0.6} roughness={0.2} />
+        <dodecahedronGeometry args={[0.22]} />
+        <meshStandardMaterial color="#ec4899" transparent opacity={0.35} wireframe />
       </mesh>
       
+      {/* Pulsing Solid Core */}
+      <mesh ref={coreRef}>
+        <sphereGeometry args={[0.09, 16, 16]} />
+        <meshStandardMaterial color="#ec4899" emissive="#ec4899" emissiveIntensity={0.8} roughness={0.1} />
+      </mesh>
+      
+      {/* Orbit ring */}
       <mesh rotation={[Math.PI / 4, 0, 0]}>
         <torusGeometry args={[0.38, 0.012, 8, 32]} />
-        <meshBasicMaterial color="#ec4899" transparent opacity={0.6} />
+        <meshBasicMaterial color="#ec4899" transparent opacity={0.5} />
       </mesh>
 
       {/* Floating text tag as HTML badge */}
       <Html position={[0, 0.8, 0]} center distanceFactor={6}>
-        <div className="px-2 py-0.5 rounded-md bg-[#ec4899]/10 border border-[#ec4899]/30 text-[#ec4899] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_8px_rgba(236,72,153,0.2)] select-none">
-          Express.js
+        <div className="px-2 py-0.5 rounded-sm bg-[#ec4899]/15 border-l-2 border-l-[#ec4899] border-y border-r border-[#ec4899]/30 text-[#ec4899] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_10px_rgba(236,72,153,0.15)] select-none backdrop-blur-xs">
+          [ Express.js ]
         </div>
       </Html>
     </group>
@@ -187,6 +293,28 @@ const FloatingText = ({ text, position, speed, range }) => {
         </div>
       </Html>
     </group>
+  );
+};
+
+// DataPacket component to animate glowing request packet flowing along lines
+const DataPacket = ({ start, end, speed = 1.0, color = "#00f3ff", delay = 0 }) => {
+  const meshRef = useRef(null);
+
+  useFrame((state) => {
+    if (!meshRef.current) return;
+    const t = (state.clock.getElapsedTime() * speed + delay) % 1.0;
+    
+    // Linear interpolation
+    meshRef.current.position.x = start[0] + (end[0] - start[0]) * t;
+    meshRef.current.position.y = start[1] + (end[1] - start[1]) * t;
+    meshRef.current.position.z = start[2] + (end[2] - start[2]) * t;
+  });
+
+  return (
+    <mesh ref={meshRef}>
+      <sphereGeometry args={[0.035, 8, 8]} />
+      <meshBasicMaterial color={color} toneMapped={false} />
+    </mesh>
   );
 };
 
@@ -261,7 +389,7 @@ const MernConstellation = ({ isMobile }) => {
     const validRy = (typeof ry === "number" && !isNaN(ry)) ? ry : 0;
     const validScale = (typeof scaleVal === "number" && !isNaN(scaleVal)) ? scaleVal : 1;
 
-    // Apply scroll springs (removed mouse parallax)
+    // Apply scroll springs (completely non-interactive)
     constellationRef.current.position.x = validX;
     constellationRef.current.position.y = validY;
     constellationRef.current.position.z = validZ;
@@ -287,6 +415,19 @@ const MernConstellation = ({ isMobile }) => {
       <Line points={[mongoPos, expressPos]} color="#10b981" lineWidth={1} transparent opacity={0.3} />
       <Line points={[reactPos, expressPos]} color="#a78bfa" lineWidth={0.7} dashed dashScale={1.5} transparent opacity={0.25} />
       <Line points={[nodePos, mongoPos]} color="#a78bfa" lineWidth={0.7} dashed dashScale={1.5} transparent opacity={0.25} />
+
+      {/* Moving API and DB Flow Data Packets along the lines */}
+      <DataPacket start={reactPos} end={mongoPos} speed={0.4} color="#00f3ff" delay={0} />
+      <DataPacket start={reactPos} end={mongoPos} speed={0.4} color="#10b981" delay={0.5} />
+      
+      <DataPacket start={reactPos} end={nodePos} speed={0.5} color="#00f3ff" delay={0} />
+      <DataPacket start={reactPos} end={nodePos} speed={0.5} color="#22c55e" delay={0.5} />
+      
+      <DataPacket start={nodePos} end={expressPos} speed={0.45} color="#22c55e" delay={0} />
+      <DataPacket start={nodePos} end={expressPos} speed={0.45} color="#ec4899" delay={0.5} />
+      
+      <DataPacket start={mongoPos} end={expressPos} speed={0.35} color="#10b981" delay={0} />
+      <DataPacket start={mongoPos} end={expressPos} speed={0.35} color="#ec4899" delay={0.5} />
 
       {/* Ambient Data Packets */}
       <mesh position={[0.7, 0.3, 0.1]}>
@@ -345,10 +486,30 @@ export const ThreeDCanvas = () => {
         <pointLight position={[0, 4, -3]} intensity={2.0} color="#10b981" />
         <pointLight position={[0, -4, 3]} intensity={2.0} color="#8b5cf6" />
         
+        {/* Tech Grid helper for coordinate layout blueprint feel */}
+        <Grid 
+          position={[0, -3.5, -2]} 
+          args={[30, 30]} 
+          cellSize={0.6} 
+          cellThickness={0.5} 
+          cellColor="#1e1b4b" 
+          sectionSize={3} 
+          sectionThickness={1.0} 
+          sectionColor="#312e81" 
+          fadeDistance={20} 
+          infiniteGrid 
+        />
+
+        {/* Ambient drift neon dust sparkles (cyan, green, pink/magenta) */}
+        <Sparkles count={30} scale={8} size={2.2} speed={0.4} color="#00f3ff" opacity={0.45} />
+        <Sparkles count={30} scale={8} size={2.2} speed={0.3} color="#10b981" opacity={0.45} />
+        <Sparkles count={30} scale={8} size={2.2} speed={0.5} color="#ec4899" opacity={0.45} />
+        
         {/* MERN Constellation */}
         <MernConstellation isMobile={isMobile} />
       </Canvas>
     </div>
   );
 };
+
 
