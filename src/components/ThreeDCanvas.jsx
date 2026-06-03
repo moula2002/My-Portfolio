@@ -195,20 +195,6 @@ const MernConstellation = ({ isMobile }) => {
   const constellationRef = useRef(null);
   const { scrollYProgress } = useScroll();
 
-  // Mouse tracking parallax
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth) - 0.5;
-      const y = (e.clientY / window.innerHeight) - 0.5;
-      setMouse({ x, y });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   // Positions of main MERN nodes inside the group
   const reactPos = [0, 1.2, 0];
   const mongoPos = [1.5, -0.6, 0.2];
@@ -275,9 +261,9 @@ const MernConstellation = ({ isMobile }) => {
     const validRy = (typeof ry === "number" && !isNaN(ry)) ? ry : 0;
     const validScale = (typeof scaleVal === "number" && !isNaN(scaleVal)) ? scaleVal : 1;
 
-    // Apply scroll springs + mouse parallax
-    constellationRef.current.position.x = validX + (mouse.x * 0.4);
-    constellationRef.current.position.y = validY - (mouse.y * 0.4);
+    // Apply scroll springs (removed mouse parallax)
+    constellationRef.current.position.x = validX;
+    constellationRef.current.position.y = validY;
     constellationRef.current.position.z = validZ;
 
     constellationRef.current.rotation.x = validRx;
