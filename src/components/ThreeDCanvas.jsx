@@ -4,55 +4,6 @@ import { useScroll, useTransform, useSpring } from "framer-motion";
 import { Line, Html, Sparkles, Grid } from "@react-three/drei";
 import { DoubleSide } from "three";
 
-// Sub-component: Pulsing Expanding Signal Ripple
-const PulsingRipple = ({ position, color, isMobile, speed = 1.0, maxScale = 2.0 }) => {
-  const meshRef = useRef(null);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const t = (state.clock.getElapsedTime() * speed) % 1.0;
-    
-    // Scale up (smaller scaling factor on mobile)
-    const baseScale = isMobile ? 0.65 : 1.0;
-    meshRef.current.scale.setScalar(baseScale * (0.3 + t * (maxScale - 0.3)));
-    
-    // Fade out as it expands
-    if (meshRef.current.material) {
-      meshRef.current.material.opacity = (1.0 - t) * 0.35;
-    }
-  });
-
-  return (
-    <mesh ref={meshRef} position={position} rotation={[Math.PI / 2, 0, 0]}>
-      <ringGeometry args={[0.4, 0.43, 32]} />
-      <meshBasicMaterial color={color} transparent opacity={0.35} depthWrite={false} side={DoubleSide} />
-    </mesh>
-  );
-};
-
-// Sub-component: Ambient Wireframe Modules (rendered only on desktop for clutter control)
-const AmbientModule = ({ position, type = "tetra", color, speed = 0.5 }) => {
-  const meshRef = useRef(null);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const t = state.clock.getElapsedTime();
-    meshRef.current.rotation.x = t * speed * 0.5;
-    meshRef.current.rotation.y = t * speed;
-    meshRef.current.position.y = position[1] + Math.sin(t * speed) * 0.25;
-  });
-
-  return (
-    <mesh ref={meshRef} position={position}>
-      {type === "tetra" ? (
-        <tetrahedronGeometry args={[0.12]} />
-      ) : (
-        <octahedronGeometry args={[0.1]} />
-      )}
-      <meshStandardMaterial color={color} transparent opacity={0.15} wireframe />
-    </mesh>
-  );
-};
 
 // Sub-component: 3D React Atom Node
 const ReactNode = ({ position, isDark, isMobile }) => {
@@ -516,20 +467,6 @@ const MernConstellation = ({ isMobile, isDark }) => {
       <NodeJsNode position={nodePos} isDark={isDark} isMobile={isMobile} />
       <ExpressNode position={expressPos} isDark={isDark} isMobile={isMobile} />
 
-      {/* Pulse signal wave ripples for each node */}
-      <PulsingRipple position={reactPos} color={isDark ? "#00f3ff" : "#0891b2"} isMobile={isMobile} speed={0.8} maxScale={1.5} />
-      <PulsingRipple position={mongoPos} color={isDark ? "#10b981" : "#047857"} isMobile={isMobile} speed={0.6} maxScale={1.6} />
-      <PulsingRipple position={nodePos} color={isDark ? "#22c55e" : "#15803d"} isMobile={isMobile} speed={0.7} maxScale={1.8} />
-      <PulsingRipple position={expressPos} color={isDark ? "#ec4899" : "#be185d"} isMobile={isMobile} speed={0.9} maxScale={1.7} />
-
-      {/* Ambient background wireframe modules - rendered only on desktop for clutter control */}
-      {!isMobile && (
-        <>
-          <AmbientModule position={[-2.5, 1.5, -0.5]} type="octa" color={isDark ? "#a78bfa" : "#7c3aed"} speed={0.4} />
-          <AmbientModule position={[2.5, -1.0, 0.5]} type="tetra" color={isDark ? "#3b82f6" : "#2563eb"} speed={0.5} />
-          <AmbientModule position={[-1.0, -2.5, -0.3]} type="octa" color={isDark ? "#10b981" : "#059669"} speed={0.3} />
-        </>
-      )}
 
       {/* Constellation Link Lines representing network routes / API calls */}
       <Line points={[reactPos, mongoPos]} color={neonLineColor} lineWidth={1} transparent opacity={0.3} />
