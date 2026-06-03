@@ -1,7 +1,7 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useEffect, useState } from "react";
 import { useScroll, useTransform, useSpring } from "framer-motion";
-import { Line, Text } from "@react-three/drei";
+import { Line, Html } from "@react-three/drei";
 
 // Sub-component: 3D React Atom Node
 const ReactNode = ({ position }) => {
@@ -39,16 +39,12 @@ const ReactNode = ({ position }) => {
         <meshBasicMaterial color="#00f3ff" transparent opacity={0.6} />
       </mesh>
 
-      {/* Floating text tag */}
-      <Text 
-        position={[0, 0.9, 0]} 
-        fontSize={0.14} 
-        color="#00f3ff" 
-        material-transparent={true} 
-        material-opacity={0.8}
-      >
-        React.js
-      </Text>
+      {/* Floating text tag as HTML badge */}
+      <Html position={[0, 0.8, 0]} center distanceFactor={6}>
+        <div className="px-2 py-0.5 rounded-md bg-[#00f3ff]/10 border border-[#00f3ff]/30 text-[#00f3ff] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_8px_rgba(0,243,255,0.2)] select-none">
+          React.js
+        </div>
+      </Html>
     </group>
   );
 };
@@ -85,16 +81,12 @@ const MongoNode = ({ position }) => {
         {stackMaterial}
       </mesh>
 
-      {/* Floating text tag */}
-      <Text 
-        position={[0, 0.9, 0]} 
-        fontSize={0.14} 
-        color="#10b981" 
-        material-transparent={true} 
-        material-opacity={0.8}
-      >
-        MongoDB
-      </Text>
+      {/* Floating text tag as HTML badge */}
+      <Html position={[0, 0.8, 0]} center distanceFactor={6}>
+        <div className="px-2 py-0.5 rounded-md bg-[#10b981]/10 border border-[#10b981]/30 text-[#10b981] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_8px_rgba(16,185,129,0.2)] select-none">
+          MongoDB
+        </div>
+      </Html>
     </group>
   );
 };
@@ -134,16 +126,12 @@ const NodeJsNode = ({ position }) => {
       <Line points={[[0, 0, 0], [0.4, 0.2, 0.1]]} color="#4ade80" lineWidth={0.8} transparent opacity={0.5} />
       <Line points={[[0, 0, 0], [-0.3, -0.3, -0.2]]} color="#4ade80" lineWidth={0.8} transparent opacity={0.5} />
 
-      {/* Floating text tag */}
-      <Text 
-        position={[0, 0.9, 0]} 
-        fontSize={0.14} 
-        color="#22c55e" 
-        material-transparent={true} 
-        material-opacity={0.8}
-      >
-        Node.js
-      </Text>
+      {/* Floating text tag as HTML badge */}
+      <Html position={[0, 0.8, 0]} center distanceFactor={6}>
+        <div className="px-2 py-0.5 rounded-md bg-[#22c55e]/10 border border-[#22c55e]/30 text-[#22c55e] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_8px_rgba(34,197,94,0.2)] select-none">
+          Node.js
+        </div>
+      </Html>
     </group>
   );
 };
@@ -171,42 +159,34 @@ const ExpressNode = ({ position }) => {
         <meshBasicMaterial color="#ec4899" transparent opacity={0.6} />
       </mesh>
 
-      {/* Floating text tag */}
-      <Text 
-        position={[0, 0.9, 0]} 
-        fontSize={0.14} 
-        color="#ec4899" 
-        material-transparent={true} 
-        material-opacity={0.8}
-      >
-        Express.js
-      </Text>
+      {/* Floating text tag as HTML badge */}
+      <Html position={[0, 0.8, 0]} center distanceFactor={6}>
+        <div className="px-2 py-0.5 rounded-md bg-[#ec4899]/10 border border-[#ec4899]/30 text-[#ec4899] text-[10px] font-bold font-mono whitespace-nowrap shadow-[0_0_8px_rgba(236,72,153,0.2)] select-none">
+          Express.js
+        </div>
+      </Html>
     </group>
   );
 };
 
-// Floating Code snippets particles
+// Floating Code snippets particles as HTML badges
 const FloatingText = ({ text, position, speed, range }) => {
-  const textRef = useRef(null);
+  const labelRef = useRef(null);
 
   useFrame((state) => {
-    if (!textRef.current) return;
+    if (!labelRef.current) return;
     const t = state.clock.getElapsedTime() * speed;
-    textRef.current.position.y = position[1] + Math.sin(t) * range;
-    textRef.current.rotation.y = Math.sin(t * 0.3) * 0.2;
+    labelRef.current.position.y = position[1] + Math.sin(t) * range;
   });
 
   return (
-    <Text
-      ref={textRef}
-      position={position}
-      fontSize={0.12}
-      color="#a78bfa"
-      material-transparent={true}
-      material-opacity={0.4}
-    >
-      {text}
-    </Text>
+    <group ref={labelRef} position={position}>
+      <Html center distanceFactor={6}>
+        <div className="text-[#a78bfa]/50 font-mono text-[9px] sm:text-[10px] whitespace-nowrap select-none bg-[#a78bfa]/5 px-2 py-0.5 rounded border border-[#a78bfa]/15 shadow-xs">
+          {text}
+        </div>
+      </Html>
+    </group>
   );
 };
 
@@ -279,15 +259,31 @@ const MernConstellation = ({ isMobile }) => {
     const t = state.clock.getElapsedTime();
     const autoRotateY = t * 0.08;
 
+    // Read spring values safely to avoid NaN-corruption crashes in ThreeJS matrix calculations
+    const x = springX.get();
+    const y = springY.get();
+    const z = springZ.get();
+    const rx = springRx.get();
+    const ry = springRy.get();
+    const scaleVal = springScale.get();
+
+    // Check if values are valid numbers
+    const validX = (typeof x === "number" && !isNaN(x)) ? x : 0;
+    const validY = (typeof y === "number" && !isNaN(y)) ? y : 0;
+    const validZ = (typeof z === "number" && !isNaN(z)) ? z : 0;
+    const validRx = (typeof rx === "number" && !isNaN(rx)) ? rx : 0;
+    const validRy = (typeof ry === "number" && !isNaN(ry)) ? ry : 0;
+    const validScale = (typeof scaleVal === "number" && !isNaN(scaleVal)) ? scaleVal : 1;
+
     // Apply scroll springs + mouse parallax
-    constellationRef.current.position.x = springX.get() + (mouse.x * 0.4);
-    constellationRef.current.position.y = springY.get() - (mouse.y * 0.4);
-    constellationRef.current.position.z = springZ.get();
+    constellationRef.current.position.x = validX + (mouse.x * 0.4);
+    constellationRef.current.position.y = validY - (mouse.y * 0.4);
+    constellationRef.current.position.z = validZ;
 
-    constellationRef.current.rotation.x = springRx.get();
-    constellationRef.current.rotation.y = springRy.get() + autoRotateY;
+    constellationRef.current.rotation.x = validRx;
+    constellationRef.current.rotation.y = validRy + autoRotateY;
 
-    constellationRef.current.scale.setScalar(springScale.get());
+    constellationRef.current.scale.setScalar(validScale);
   });
 
   return (
@@ -369,3 +365,4 @@ export const ThreeDCanvas = () => {
     </div>
   );
 };
+
