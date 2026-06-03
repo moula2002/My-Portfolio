@@ -12,6 +12,7 @@ const roles = [
 
 export const HeroSection = () => {
   const [roleIndex, setRoleIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState("developer.js");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -109,64 +110,144 @@ export const HeroSection = () => {
         >
           <TiltCard className="w-full max-w-md shadow-2xl">
             <div className="w-full bg-card/30 backdrop-blur-md border border-border/40 rounded-xl overflow-hidden font-mono text-xs sm:text-sm text-foreground/95 shadow-inner">
-              {/* Terminal Title Bar */}
-              <div className="flex items-center justify-between px-4 py-3 bg-secondary/35 border-b border-border/30">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                  <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+              {/* Terminal Title Bar & Interactive Tabs */}
+              <div className="flex flex-col bg-secondary/35 border-b border-border/30">
+                <div className="flex items-center justify-between px-4 py-2 bg-secondary/20">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                    <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                  </div>
+                  <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-widest">
+                    <Terminal size={10} />
+                    <span>interactive_console</span>
+                  </div>
+                  <div className="w-8" />
                 </div>
-                <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-widest">
-                  <Terminal size={10} />
-                  <span>developer.js</span>
+                
+                {/* Tabs Row */}
+                <div className="flex border-t border-border/10 text-[11px] select-none bg-background/10">
+                  {["developer.js", "skills.json", "about.md"].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`px-4 py-2 border-r border-border/20 cursor-pointer transition-colors ${
+                        activeTab === tab
+                          ? "bg-card/40 text-primary font-bold border-b border-b-primary"
+                          : "text-muted-foreground hover:text-foreground hover:bg-card/10"
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
                 </div>
-                <div className="w-8" />
               </div>
 
               {/* Terminal Contents */}
-              <div className="p-5 space-y-4 text-left leading-relaxed">
-                <div>
-                  <span className="text-pink-500">const</span>{" "}
-                  <span className="text-blue-400">developer</span> = &#123;
-                </div>
-                <div className="pl-4">
-                  <span className="text-purple-400">name</span>:{" "}
-                  <span className="text-yellow-300">"Moula Hussain"</span>,
-                </div>
-                <div className="pl-4">
-                  <span className="text-purple-400">role</span>:{" "}
-                  <span className="text-yellow-300">"MERN Full Stack Dev"</span>,
-                </div>
-                <div className="pl-4">
-                  <span className="text-purple-400">skills</span>: &#91;
-                  <br />
-                  <span className="pl-4 text-yellow-300">"React"</span>,{" "}
-                  <span className="text-yellow-300">"Node.js"</span>,{" "}
-                  <span className="text-yellow-300">"Express"</span>,
-                  <br />
-                  <span className="pl-4 text-yellow-300">"MongoDB"</span>,{" "}
-                  <span className="text-yellow-300">"TailwindCSS"</span>
-                  <br />
-                  <span className="text-white">&#93;</span>,
-                </div>
-                <div className="pl-4">
-                  <span className="text-purple-400">lovesCode</span>:{" "}
-                  <span className="text-orange-400">true</span>,
-                </div>
-                <div className="pl-4">
-                  <span className="text-purple-400">coreDrive</span>:{" "}
-                  <span className="text-yellow-300">
-                    "Building clean, 3D interactive user interfaces"
-                  </span>
-                </div>
-                <div>&#125;;</div>
+              <div className="p-5 min-h-[220px] flex flex-col justify-between text-left leading-relaxed">
+                <div className="flex-grow">
+                  <AnimatePresence mode="wait">
+                    {activeTab === "developer.js" && (
+                      <motion.div
+                        key="developer"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                        className="space-y-1.5"
+                      >
+                        <div>
+                          <span className="text-pink-500">const</span>{" "}
+                          <span className="text-blue-400">developer</span> = &#123;
+                        </div>
+                        <div className="pl-4">
+                          <span className="text-purple-400">name</span>:{" "}
+                          <span className="text-yellow-300">"Moula Hussain"</span>,
+                        </div>
+                        <div className="pl-4">
+                          <span className="text-purple-400">role</span>:{" "}
+                          <span className="text-yellow-300">"MERN Full Stack Dev"</span>,
+                        </div>
+                        <div className="pl-4">
+                          <span className="text-purple-400">coreDrive</span>:{" "}
+                          <span className="text-yellow-300">
+                            "Building clean, 3D interactive user interfaces"
+                          </span>,
+                        </div>
+                        <div className="pl-4">
+                          <span className="text-purple-400">lovesCode</span>:{" "}
+                          <span className="text-orange-400">true</span>
+                        </div>
+                        <div>&#125;;</div>
+                      </motion.div>
+                    )}
 
-                <div className="pt-2 border-t border-border/20 flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className="text-green-400">&gt;</span>
-                  <span>developer.compileState()</span>
+                    {activeTab === "skills.json" && (
+                      <motion.div
+                        key="skills"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                        className="space-y-1"
+                      >
+                        <div>&#123;</div>
+                        <div className="pl-4">
+                          <span className="text-purple-400">"frontend"</span>: &#91;
+                          <span className="text-yellow-300">"React"</span>,{" "}
+                          <span className="text-yellow-300">"Tailwind"</span>,{" "}
+                          <span className="text-yellow-300">"JS"</span>&#93;,
+                        </div>
+                        <div className="pl-4">
+                          <span className="text-purple-400">"backend"</span>: &#91;
+                          <span className="text-yellow-300">"Node"</span>,{" "}
+                          <span className="text-yellow-300">"Express"</span>,{" "}
+                          <span className="text-yellow-300">"MongoDB"</span>&#93;,
+                        </div>
+                        <div className="pl-4">
+                          <span className="text-purple-400">"tools"</span>: &#91;
+                          <span className="text-yellow-300">"Git"</span>,{" "}
+                          <span className="text-yellow-300">"Figma"</span>,{" "}
+                          <span className="text-yellow-300">"VS Code"</span>&#93;
+                        </div>
+                        <div>&#125;</div>
+                      </motion.div>
+                    )}
+
+                    {activeTab === "about.md" && (
+                      <motion.div
+                        key="about"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                        className="space-y-2 text-muted-foreground font-sans text-xs sm:text-sm"
+                      >
+                        <h4 className="text-primary font-mono font-bold text-sm"># Profile Summary</h4>
+                        <p>
+                          Dedicated MCA graduate and full-stack MERN engineer specializing in building secure, responsive, and performance-optimized web architectures.
+                        </p>
+                        <p>
+                          Committed to writing maintainable code and building premium user experiences.
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-                <div className="text-xs text-green-400">
-                  ⚡ Compilation successful. System active!
+
+                {/* Bottom Console Exec Section */}
+                <div className="pt-3 border-t border-border/20 flex flex-col gap-1.5 font-mono text-[10px] sm:text-[11px] mt-4">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-green-400">&gt;</span>
+                    <span>developer.status</span>
+                  </div>
+                  <div className="text-green-400 flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span>Available for opportunities & collaboration</span>
+                  </div>
                 </div>
               </div>
             </div>
