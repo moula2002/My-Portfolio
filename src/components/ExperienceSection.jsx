@@ -69,11 +69,11 @@ export const ExperienceSection = () => {
   };
 
   return (
-    <section id="experience" className="py-24 px-4 relative overflow-hidden bg-secondary/5">
+    <section id="experience" className="py-24 px-4 relative overflow-hidden">
       {/* Glow orb decoration */}
       <div className="absolute top-1/2 right-0 w-80 h-80 rounded-full bg-primary/5 glow-orb pointer-events-none" />
 
-      <div className="container mx-auto max-w-4xl relative z-10">
+      <div className="container mx-auto max-w-4xl relative z-10 glass-section p-8 md:p-12 rounded-2xl shadow-xl">
         <h2 className="text-3xl md:text-5xl font-bold mb-16 text-center">
           Work <span className="text-gradient">Experience</span>
         </h2>

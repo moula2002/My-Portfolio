@@ -31,7 +31,7 @@ export const HeroSection = () => {
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-pink-500/10 glow-orb animate-float-delay pointer-events-none" />
       <div className="absolute top-1/2 left-2/3 w-64 h-64 rounded-full bg-blue-500/10 glow-orb animate-float-slow pointer-events-none" style={{ animationDelay: "-4s" }} />
 
-      <div className="container max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10 text-left">
+      <div className="container max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10 text-left glass-section p-8 md:p-12 rounded-2xl shadow-xl">
         {/* Left Side: Copy and Title */}
         <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
           <motion.div
@@ -124,18 +124,17 @@ export const HeroSection = () => {
                   </div>
                   <div className="w-8" />
                 </div>
-                
+
                 {/* Tabs Row */}
                 <div className="flex border-t border-border/10 text-[11px] select-none bg-background/10">
                   {["developer.js", "skills.json", "about.md"].map((tab) => (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className={`px-4 py-2 border-r border-border/20 cursor-pointer transition-colors ${
-                        activeTab === tab
+                      className={`px-4 py-2 border-r border-border/20 cursor-pointer transition-colors ${activeTab === tab
                           ? "bg-card/40 text-primary font-bold border-b border-b-primary"
                           : "text-muted-foreground hover:text-foreground hover:bg-card/10"
-                      }`}
+                        }`}
                     >
                       {tab}
                     </button>

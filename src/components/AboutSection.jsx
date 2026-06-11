@@ -21,7 +21,7 @@ export const AboutSection = () => {
       {/* Background visual orb */}
       <div className="absolute top-1/2 left-0 w-80 h-80 rounded-full bg-primary/5 glow-orb pointer-events-none" />
 
-      <div className="container mx-auto max-w-5xl relative z-10">
+      <div className="container mx-auto max-w-5xl relative z-10 glass-section p-8 md:p-12 rounded-2xl shadow-xl">
         <h2 className="text-3xl md:text-5xl font-bold mb-16 text-center">
           About <span className="text-gradient">Me</span>
         </h2>
@@ -40,14 +40,14 @@ export const AboutSection = () => {
             </h3>
 
             <p className="text-muted-foreground leading-relaxed text-base">
-              I am a dedicated Web Developer and MCA (Master of Computer Applications) graduate, 
-              specializing in the MERN stack (MongoDB, Express.js, React.js, Node.js). 
+              I am a dedicated Web Developer and MCA (Master of Computer Applications) graduate,
+              specializing in the MERN stack (MongoDB, Express.js, React.js, Node.js).
               I design and build secure, interactive, and high-performance applications that solve real-world problems.
             </p>
 
             <p className="text-muted-foreground leading-relaxed text-base">
-              From coding business logic in Express and structuring databases in MongoDB, 
-              to fine-tuning responsive layouts and 3D interactions in React, 
+              From coding business logic in Express and structuring databases in MongoDB,
+              to fine-tuning responsive layouts and 3D interactions in React,
               I am committed to delivering clean code and exceptional user experiences.
             </p>
 

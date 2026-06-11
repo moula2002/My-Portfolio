@@ -33,11 +33,11 @@ export const SkillsSection = () => {
   );
 
   return (
-    <section id="skills" className="py-24 px-4 relative bg-secondary/15 overflow-hidden">
+    <section id="skills" className="py-24 px-4 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-1/4 left-1/3 w-80 h-80 rounded-full bg-primary/5 glow-orb pointer-events-none" />
 
-      <div className="container mx-auto max-w-5xl relative z-10">
+      <div className="container mx-auto max-w-5xl relative z-10 glass-section p-8 md:p-12 rounded-2xl shadow-xl">
         <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center animate-fade-in">
           My <span className="text-gradient">Skills</span>
         </h2>

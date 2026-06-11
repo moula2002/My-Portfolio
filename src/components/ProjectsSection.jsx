@@ -125,13 +125,13 @@ export const ProjectsSection = () => {
       <div className="absolute top-1/3 right-0 w-96 h-96 rounded-full bg-primary/5 glow-orb pointer-events-none" />
       <div className="absolute bottom-10 left-0 w-80 h-80 rounded-full bg-indigo-500/5 glow-orb pointer-events-none" />
 
-      <div className="container mx-auto max-w-6xl relative z-10">
+      <div className="container mx-auto max-w-6xl relative z-10 glass-section p-8 md:p-12 rounded-2xl shadow-xl">
         <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center">
           Featured <span className="text-gradient">Projects</span>
         </h2>
 
         <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Here is a curated list of live web applications retrieved from my GitHub repositories. 
+          Here is a curated list of live web applications retrieved from my GitHub repositories.
           Each represents client requirements delivered with responsive design, robust state management, and modern technologies.
         </p>
 
@@ -141,11 +141,10 @@ export const ProjectsSection = () => {
             <button
               key={key}
               onClick={() => setActiveCategory(category)}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 border cursor-pointer ${
-                activeCategory === category
+              className={`px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 border cursor-pointer ${activeCategory === category
                   ? "bg-primary text-primary-foreground border-primary shadow-[0_0_12px_rgba(139,92,246,0.4)]"
                   : "bg-card/45 text-muted-foreground border-border hover:border-primary/45 hover:text-foreground"
-              }`}
+                }`}
             >
               {category}
             </button>
@@ -153,7 +152,7 @@ export const ProjectsSection = () => {
         </div>
 
         {/* Dynamic Grid using Framer Motion for morphing layout */}
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
@@ -176,9 +175,9 @@ export const ProjectsSection = () => {
                       <div className="w-full h-40 rounded-lg border border-border/40 overflow-hidden relative mb-6 transition-colors duration-300">
                         {project.image ? (
                           <div className="w-full h-full relative overflow-hidden">
-                            <img 
-                              src={project.image} 
-                              alt={project.title} 
+                            <img
+                              src={project.image}
+                              alt={project.title}
                               className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                             />
                             {/* Overlay icon in top right */}
@@ -199,7 +198,7 @@ export const ProjectsSection = () => {
                       {/* Tech Badges */}
                       <div className="flex flex-wrap gap-1.5 mb-4">
                         {project.tech.map((techItem, index) => (
-                          <span 
+                          <span
                             key={index}
                             className="px-2 py-0.5 text-[10px] font-medium border border-border/40 rounded-full bg-secondary/60 text-muted-foreground"
                           >

@@ -37,7 +37,7 @@ export const ContactSection = () => {
               "Thank you for your message. I'll get back to you soon.",
           });
           setIsSubmitting(false);
-          formRef.current.reset(); 
+          formRef.current.reset();
         },
         (error) => {
           toast({
@@ -52,8 +52,8 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-4 relative bg-secondary/30">
-      <div className="container mx-auto max-w-5xl">
+    <section id="contact" className="py-24 px-4 relative overflow-hidden">
+      <div className="container mx-auto max-w-5xl relative z-10 glass-section p-8 md:p-12 rounded-2xl shadow-xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
           Get In <span className="text-primary"> Touch</span>
         </h2>
@@ -112,10 +112,10 @@ export const ContactSection = () => {
             <div className="pt-8">
               <h4 className="font-medium mb-4">Connect With Me</h4>
               <div className="flex space-x-4 justify-center">
-                
-                <a href="https://linkedin.com/in/moula-hussain-mca" 
-                target="_blank"
-                 rel="noreferrer">
+
+                <a href="https://linkedin.com/in/moula-hussain-mca"
+                  target="_blank"
+                  rel="noreferrer">
                   <Linkedin />
                 </a>
                 <a href="#" target="_blank" rel="noreferrer">
